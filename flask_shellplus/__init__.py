@@ -140,8 +140,13 @@ class Shell(Command):
             from bpython import embed
             embed(banner=self.banner, locals_=context)
         elif shell == 'ptpython':
-            from ptpython.repl import embed
-            embed(banner=self.banner, user_ns=context, vi_mode=vi_mode)
+            from ptpython.repl import embed, run_config
+            history_path=os.path.join(os.path.expanduser('~/.ptpython/'), 'history')
+            embed(
+                locals=context,
+                configure=run_config,
+                vi_mode=vi_mode,
+                history_filename=history_path)
         elif shell == 'ptipython':
             from ptpython.ipython import embed
             embed(user_ns=context, vi_mode=vi_mode)
